@@ -1,20 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { getFirstHero } from '../../actions/actionFirstHero'
+import md5 from "js-md5";
+
+const privateKey = "35792de2a5e56fb2892f5c34f9c4d1ac4207c14b";
+const publicKey = "6b570a4f30c77f6280c0521ed75cfb94";
+const ts = Date.now();
+const apiKey = md5(Date.now() + privateKey + publicKey);
+
 
 class Detail extends  Component{
   constructor(props) {
     super(props);
   }
+
+  componentDidMount() {
+    fetch('http://gateway.marvel.com/v1/public/characters?ts=' + ts + '&apikey=' + publicKey + '&hash=' + apiKey)
+      .then(response=> {
+        return response.json();
+      })
+      .then(res => {
+        this.props.dispatch(getFirstHero(res.data.results));
+        return;
+      })
+      .catch(error => alert(error));
+
+  }
   render(){
-    var heroList = this.props.hero;
-    console.log(heroList);
-    setTimeout(()=>console.log(Object.values(heroList)), 1000);
+    console.log(this.props.hero)
     return(
       <div className="App">
         <h4>Герои</h4>
         <div className="heroCard">
-          <img src={heroList.img} alt=""/>
-          <a href="#"><b>{heroList.name}</b></a>
+          <img src="" alt=""/>
+          <a href="#"><b></b></a>
         </div>
       </div>
     )
