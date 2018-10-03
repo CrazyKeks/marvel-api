@@ -6,10 +6,9 @@ class Detail extends  Component{
     super(props);
   }
   render(){
-
-    const heroList = this.props.hero;
-    console.log(Array.from(heroList));
+    var heroList = this.props.hero;
     console.log(heroList);
+    setTimeout(()=>console.log(Object.values(heroList)), 1000);
     return(
       <div className="App">
         <h4>Герои</h4>
