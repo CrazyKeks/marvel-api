@@ -14,20 +14,18 @@ class Detail extends  Component{
     super(props);
   }
 
-  componentDidMount() {
-    fetch('http://gateway.marvel.com/v1/public/characters?ts=' + ts + '&apikey=' + publicKey + '&hash=' + apiKey)
-      .then(response=> {
-        return response.json();
-      })
-      .then(res => {
-        this.props.dispatch(getFirstHero(res.data.results));
-        return;
-      })
-      .catch(error => alert(error));
-
-  }
   render(){
-    console.log(this.props.hero)
+    async function test() {
+        return await fetch('http://gateway.marvel.com/v1/public/characters?ts=' + ts + '&apikey=' + publicKey + '&hash=' + apiKey)
+          .then(response=> {
+            return response.json();
+          })
+          .then(res => {
+              return res;
+          })
+          .catch(error => alert(error));
+    }
+    console.log(test().then(response=>console.log(response)));
     return(
       <div className="App">
         <h4>Герои</h4>
