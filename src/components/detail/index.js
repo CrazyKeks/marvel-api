@@ -12,38 +12,52 @@ const apiKey = md5(Date.now() + privateKey + publicKey);
 class Detail extends  Component{
   constructor(props) {
     super(props);
+    this.state = {
+      heroes: []
+    }
   }
 
-  componentDidMount() {
-    fetch('http://gateway.marvel.com/v1/public/characters?ts=' + ts + '&apikey=' + publicKey + '&hash=' + apiKey)
+  componentWillMount() {
+    return fetch('http://gateway.marvel.com/v1/public/characters?ts=' + ts + '&apikey=' + publicKey + '&hash=' + apiKey)
       .then(response=> {
         return response.json();
       })
       .then(res => {
-        this.props.dispatch(getFirstHero(res.data.results));
-        return;
+        this.setState({
+          'heroes': res.data.results
+        });
+        return res.data.results;
       })
       .catch(error => alert(error));
-
   }
+
   render(){
-    console.log(this.props.hero)
     return(
-      <div className="App">
-        <h4>Герои</h4>
-        <div className="heroCard">
-          <img src="" alt=""/>
-          <a href="#"><b></b></a>
+      <div className="card-list">
+        <div className="wrap-search">
+          <label htmlFor="">Поиск персонажа:</label>
+          <input type="text" className="input-search"/>
         </div>
+        <h4>Герои</h4>
+        {
+          this.state.heroes.map(hero => {
+            return (
+            <div className="heroCard" key={hero.id}>
+              <img src={hero.thumbnail.path + '.' + hero.thumbnail.extension} alt=""/>
+              <a href="#"><b>{hero.name}</b></a>
+            </div>
+            )
+          })
+        }
+
+
       </div>
     )
   }
 }
 
 const mapStateToProps = store => {
-  return {
-    hero: store.hero
-  }
+  return {}
 }
 
 

@@ -1,4 +1,4 @@
-import { FirstDownloadHero } from '../actions/actionFirstHero'
+// import { FirstDownloadHero } from '../actions/actionFirstHero'
 
 var initialState = {};
 
