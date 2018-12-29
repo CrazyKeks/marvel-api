@@ -16,7 +16,6 @@ class Detail extends  Component{
       heroes: []
     }
   }
-
   componentWillMount() {
     return fetch('http://gateway.marvel.com/v1/public/characters?ts=' + ts + '&apikey=' + publicKey + '&hash=' + apiKey)
       .then(response=> {
